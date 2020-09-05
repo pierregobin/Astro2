@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import argparse
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(description="generate a bunch of images (circle moving with noise)")
 parser.add_argument("-f","--filename",help="prefix of files",default="image")
 parser.add_argument("-n","--number", type=int, help="number of images",default=1)
 parser.add_argument( "--height", type=int, help="height of images", default=256)
@@ -29,8 +29,6 @@ for i in range(1,number_of_image):
     b1 = np.copy(black_image)
     noise=np.random.normal(noise_mean,noise_sigma,(b1.shape[0],b1.shape[1],b1.shape[2]))
     cv2.circle(b1,(100+i*drifth,100+i*driftv),10,(255,0,0),3)
-    s = "org-%s-%05d.bmp" %(filename, i)
-    cv2.imwrite(s,b1)
     b1 = b1 + noise
     b1 = b1.astype(int)
     s = "%s-%05d.%s" %(filename, i, suffix)
